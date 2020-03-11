@@ -1,80 +1,90 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import Board from './Board/Board';
-import {calculateWinner} from './Helpers/helpers';
+import React, {useState, useEffect} from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+
+const Square = (props) => {
+    console.log(props);
+    const { handleClick, value } = props;
+    
+    return (
+    <button 
+        className="square"
+        onClick={() => {
+            console.debug("onClick", handleClick);
+            handleClick();
+        }}
+    >
+        {value}
+    </button>
+    )
+}
+
+const Board = () => {
+  const [squares, setSquares] = useState(Array(9).fill(1));
+
+
+  const handleClick = (el) => (evt) => {
+      const squaresNext = squares.slice()
+      squaresNext[el] = "X"
+      setSquares(squaresNext)
+  }
+  
+  const renderSquare = (i) => {
+    return <Square 
+            value={squares[i]} 
+            handleClick = {handleClick(i)}
+           />;
+  }
+
+  
+  useEffect(() => {
+      console.warn("squares", squares)
+  })
+
+  const handleClickBtn = () => () => {
+      setSquares(["1", "2", "3", "4", "5", "6", "7", "8", "9"])
+  }
+
+    const status = "Next player: X";
+
+    return (
+      <div>
+        <div className="status">{status}</div>
+        <div className="board-row">
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </div>
+        <button onClick={handleClickBtn}>Test</button>
+      </div>
+    );
+  
+}
 
 class Game extends React.Component {
-    state = {
-        history: [
-            {
-                squares: Array(9).fill(null)
-            }
-        ],
-        xIsNext: true,
-        stepNumber: 0,
-    };
-
-    handleClick(i) {
-        const history = this.state.history.slice(0,this.state.stepNumber +1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-
-        if(calculateWinner(squares) || squares[i]) {
-            return;
-        }
-
-        squares[i] = this.state.xIsNext ? "X" : "O";
-        this.setState({
-            history:history.concat([{
-                squares: squares,
-            }]),
-            stepNumber:history.length,
-            xIsNext: !this.state.xIsNext,
-        });
-    }
-    jumpTo(step) {
-        this.setState ({
-            stepNumber:step,
-            xIsNext: (step % 2) === 0,
-        })
-    }
-
-    render() {
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
-        
-        const winner = calculateWinner(current.squares);
-        const moves = history.map((step, move) => {
-            const desc = move ? 'Przejdź do ruchu #' + move : 'Przejdź na początek gry';
-            return (
-            <li key={move}>
-                <button onClick={()=> this.jumpTo(move)}>{desc}</button>
-            </li>
-            );
-        });
-        let status;
-
-        if (winner) {
-            status = "Wygrywa: " + winner;
-        } else {
-            status = "Następny gracz: " + (this.state.xIsNext ? "X" : "O");
-        }
-        return (
-            <div className="game">
-                <div className="game-board">
-                    <Board
-                        squares={current.squares}
-                        onClick={i => this.handleClick(i)}
-                    />
-                </div>
-                <div className="game-info">
-                    <div>{status}</div>
-                    <ol>{moves}</ol>
-                </div>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="game">
+        <div className="game-board">
+          <Board />
+        </div>
+        <div className="game-info">
+          <div>{/* status */}</div>
+          <ol>{/* TODO */}</ol>
+        </div>
+      </div>
+    );
+  }
 }
 
 // ========================================
