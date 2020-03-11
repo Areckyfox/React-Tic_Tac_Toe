@@ -1,50 +1,37 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
 const Square = (props) => {
     console.log(props);
-    const { handleClick, value } = props;
     
     return (
     <button 
         className="square"
-        onClick={() => {
-            console.debug("onClick", handleClick);
-            handleClick();
-        }}
+        onClick={()=> props.onClick()} 
     >
-        {value}
+        {props.value}
     </button>
     )
 }
 
 const Board = () => {
-  const [squares, setSquares] = useState(Array(9).fill(1));
+  const [squares, setSquares] = useState(Array(9).fill(null));
 
-
-  const handleClick = (el) => (evt) => {
-      const squaresNext = squares.slice()
-      squaresNext[el] = "X"
-      setSquares(squaresNext)
-  }
   
+  const handleClick = (el) => {
+    const array = squares.slice();
+    array[el] = "x";
+    setSquares(array);
+  }
   const renderSquare = (i) => {
     return <Square 
             value={squares[i]} 
-            handleClick = {handleClick(i)}
+            onClick = {()=> handleClick(i)}
            />;
   }
 
   
-  useEffect(() => {
-      console.warn("squares", squares)
-  })
-
-  const handleClickBtn = () => () => {
-      setSquares(["1", "2", "3", "4", "5", "6", "7", "8", "9"])
-  }
-
     const status = "Next player: X";
 
     return (
@@ -65,7 +52,6 @@ const Board = () => {
           {renderSquare(7)}
           {renderSquare(8)}
         </div>
-        <button onClick={handleClickBtn}>Test</button>
       </div>
     );
   
