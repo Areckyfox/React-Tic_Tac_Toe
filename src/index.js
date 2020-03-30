@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 const Square = (props) => {
-    console.log(props);
+    const {onClick, value} = props;
     
     return (
     <button 
-        className="square"
-        onClick={()=> props.onClick()} 
+      className="square"
+      onClick={()=> onClick()} 
     >
-        {props.value}
+      {value}
     </button>
     )
 }
