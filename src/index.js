@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {calculateWinner} from './Helpers/helpers';
 
 const Square = (props) => {
     const {onClick, value} = props;
@@ -8,7 +9,7 @@ const Square = (props) => {
     return (
     <button 
       className="square"
-      onClick={()=> onClick()} 
+      onClick={onClick} 
     >
       {value}
     </button>
@@ -17,13 +18,19 @@ const Square = (props) => {
 
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setxIsNext] = useState(true);
 
   
   const handleClick = (el) => {
-    const array = squares.slice();
-    array[el] = "x";
-    setSquares(array);
+    if (calculateWinner(squares) || squares[el]) {
+      return;
+    }
+    const arraySquares = squares.slice();
+    arraySquares[el] = xIsNext ? "X" : "Y";
+    setSquares(arraySquares);
+    setxIsNext(!xIsNext);
   }
+
   const renderSquare = (i) => {
     return <Square 
             value={squares[i]} 
@@ -31,9 +38,9 @@ const Board = () => {
            />;
   }
 
-  
-    const status = "Next player: X";
-
+    const winner = calculateWinner(squares);
+    let status = winner ? ("Win " + winner) : ("Next player: " + (xIsNext ? "X" : "Y"));
+    
     return (
       <div>
         <div className="status">{status}</div>
@@ -57,20 +64,19 @@ const Board = () => {
   
 }
 
-class Game extends React.Component {
-  render() {
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
+const Game = () => {
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board />
       </div>
-    );
-  }
+      <div className="game-info">
+        <div>{/* status */}</div>
+        <ol>{/* TODO */}</ol>
+      </div>
+    </div>
+  );
 }
 
 // ========================================
