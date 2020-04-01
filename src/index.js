@@ -17,7 +17,6 @@ const Square = (props) => {
 }
 
 const Board = (props) => {
-console.log(props);
 
   const renderSquare = (i) => {
     return <Square 
@@ -50,27 +49,48 @@ console.log(props);
 
 const Game = () => {
 
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [history, setHistory] = useState([{table: Array(9).fill(null)}]);
   const [xIsNext, setxIsNext] = useState(true);
+  const [stepNumber, setStepNumber] = useState(0);
   
   const handleClick = el => {
     console.log(history);
-    
-    const current = history[history.length -1];
+    setHistory(history.slice(0, stepNumber + 1))
+    const current = history[history.length - 1].table;
     const arraySquares = current.slice();
+debugger
     if (calculateWinner(arraySquares) || arraySquares[el]) {
       return;
     }
     arraySquares[el] = xIsNext ? "X" : "Y";
 
-    setHistory(history.concat(arraySquares));
+    setHistory(history.concat({table: arraySquares}));
+    setStepNumber(history.length);
     setxIsNext(!xIsNext);
   };
-  const current = history[history.length - 1];
-   const winner = calculateWinner(current);
-   let status = winner
-     ? "Win " + winner
-     : "Next player: " + (xIsNext ? "X" : "Y");
+
+  const jumpTo = (step) => {
+    setStepNumber(step);
+    setxIsNext((step % 2) === 0);
+  }
+
+  let current = history[stepNumber].table;
+  const winner = calculateWinner(current);
+
+  const moves = history.map((step, i) => {
+    const desc = i ? "Przejdź do ruchu #" + i : "Przejdź na początek gry";
+    return (
+      <li key={i}>
+        <button onClick={() => jumpTo(i)}>{desc}</button>
+      </li>
+    );
+  });
+
+
+
+  let status = winner
+    ? "Winner " + winner
+    : "Next player: " + (xIsNext ? "X" : "Y");
 
   return (
     <div className="game">
@@ -82,7 +102,7 @@ const Game = () => {
       </div>
       <div className="game-info">
         <div>{status}</div>
-        <ol>{/* TODO */}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
