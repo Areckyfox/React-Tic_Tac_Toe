@@ -73,7 +73,6 @@ const Game = () => {
 
   let current = history[stepNumber].table;
   const winner = calculateWinner(current);
-  
   const moves = history.map((step, i) => {
     
     const newCoordinates = coordinates(history[i].squareNumber);
@@ -85,9 +84,14 @@ const Game = () => {
         " / " +
         "column: " + newCoordinates.y
       : "Przejdź na początek gry";
+      const classLi = stepNumber === i ? "li-bold" : "";
     return (
       <li key={i}>
-        <button onClick={() => jumpTo(i)}>{desc}</button>
+        <button className={classLi} 
+        onClick={() => jumpTo(i)}
+        >
+        {desc}
+        </button>
       </li>
     );
   });
