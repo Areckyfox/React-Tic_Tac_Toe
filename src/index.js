@@ -52,22 +52,24 @@ const Game = () => {
   const [history, setHistory] = useState([{table: Array(9).fill(null)}]);
   const [xIsNext, setxIsNext] = useState(true);
   const [stepNumber, setStepNumber] = useState(0);
-  
+  const updateHistory = el => {
+    
+  }
   const handleClick = el => {
-    console.log(history);
-    setHistory(history.slice(0, stepNumber + 1))
-    const current = history[history.length - 1].table;
+    const updateHistory = history.slice(0, stepNumber + 1)
+    const current = updateHistory[updateHistory.length - 1].table;
     const arraySquares = current.slice();
-debugger
     if (calculateWinner(arraySquares) || arraySquares[el]) {
       return;
     }
     arraySquares[el] = xIsNext ? "X" : "Y";
-
-    setHistory(history.concat({table: arraySquares}));
-    setStepNumber(history.length);
+    
+    setHistory(updateHistory.concat({table: arraySquares}));
+    setStepNumber(updateHistory.length);
     setxIsNext(!xIsNext);
+    
   };
+  
 
   const jumpTo = (step) => {
     setStepNumber(step);
@@ -97,7 +99,8 @@ debugger
       <div className="game-board">
         <Board
           squares = {current} 
-          onClick={(i) => handleClick(i)}
+          onClick = {(i) => handleClick(i)}
+          onClickHistory = {(i) => updateHistory(i)}
         />
       </div>
       <div className="game-info">
