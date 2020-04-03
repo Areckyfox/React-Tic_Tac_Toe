@@ -50,6 +50,7 @@ const Game = () => {
   const [history, setHistory] = useState([{squareNumber: 0, table: Array(9).fill(null)}]);
   const [xIsNext, setxIsNext] = useState(true);
   const [stepNumber, setStepNumber] = useState(0);
+  const [reverseList, setReverseList] = useState(false);
   
   const handleClick = el => {
     const updateHistory = history.slice(0, stepNumber + 1)
@@ -70,6 +71,9 @@ const Game = () => {
     setStepNumber(step);
     setxIsNext((step % 2) === 0);
   }
+  const reverseListHandle = () => {
+    setReverseList(!reverseList)
+  }
 
   let current = history[stepNumber].table;
   const winner = calculateWinner(current);
@@ -77,14 +81,15 @@ const Game = () => {
     
     const newCoordinates = coordinates(history[i].squareNumber);
     const desc = i
-      ? "Przejdź do ruchu #" +
+      ? "Go to move #" +
         i +
         " | " +
         "line: " + newCoordinates.x +
         " / " +
         "column: " + newCoordinates.y
-      : "Przejdź na początek gry";
+      : "Go to start";
       const classLi = stepNumber === i ? "li-bold" : "";
+      
     return (
       <li key={i}>
         <button className={classLi} 
@@ -99,6 +104,7 @@ const Game = () => {
   let status = winner
     ? "Winner " + winner
     : history.length === 10 ? "Draw" : "Next player: " + (xIsNext ? "X" : "Y");
+  const classReverseList = reverseList ? "reverse-list" : "";  
 
   return (
     <div className="game">
@@ -110,7 +116,12 @@ const Game = () => {
       </div>
       <div className="game-info">
         <div>{status}</div>
-        <ul>{moves}</ul>
+        <button
+        onClick = {()=> reverseListHandle()}
+        >
+        Reverse list  
+        </button>
+        <ul className ={classReverseList}>{moves}</ul>
       </div>
     </div>
   );
