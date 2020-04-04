@@ -35,6 +35,9 @@ ol, ul {
   text-align: center;
   width: 34px;
 }
+.toColor {
+  background-color: darkorange;
+}
 
 .square:focus {
   outline: none;

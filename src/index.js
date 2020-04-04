@@ -4,11 +4,11 @@ import './index.css';
 import {calculateWinner, coordinates} from './Helpers/helpers';
 
 const Square = (props) => {
-    const {onClick, value} = props;
-    
+    const {onClick, value, toColor} = props;
+    const classNameButton = "square " + toColor;
     return (
     <button 
-      className="square"
+      className={classNameButton}
       onClick={onClick} 
     >
       {value}
@@ -17,11 +17,16 @@ const Square = (props) => {
 }
 
 const Board = (props) => {
-
+  
   const renderSquare = (i) => {
+    let toColorSquare = "";
+    if (props.toColor && props.toColor.some(el => el === i)) {
+      toColorSquare = "toColor";
+    }
     return <Square 
             value={props.squares[i]} 
             onClick = {()=> props.onClick(i)}
+            toColor = {toColorSquare}
            />;
   }    
 
@@ -100,9 +105,10 @@ const Game = () => {
       </li>
     );
   });
+  const squeareToColor = calculateWinner(current) ? calculateWinner(current).winLine: null;
 
   let status = winner
-    ? "Winner " + winner
+    ? "Winner " + winner.winner
     : history.length === 10 ? "Draw" : "Next player: " + (xIsNext ? "X" : "Y");
   const classReverseList = reverseList ? "reverse-list" : "";  
 
@@ -110,18 +116,15 @@ const Game = () => {
     <div className="game">
       <div className="game-board">
         <Board
-          squares = {current} 
-          onClick = {(i) => handleClick(i)}
+          squares={current}
+          onClick={(i) => handleClick(i)}
+          toColor={squeareToColor}
         />
       </div>
       <div className="game-info">
         <div>{status}</div>
-        <button
-        onClick = {()=> reverseListHandle()}
-        >
-        Reverse list  
-        </button>
-        <ul className ={classReverseList}>{moves}</ul>
+        <button onClick={() => reverseListHandle()}>Reverse list</button>
+        <ul className={classReverseList}>{moves}</ul>
       </div>
     </div>
   );
