@@ -21,8 +21,8 @@ const calculateWinner = (squares) => {
 } 
 
 const coordinates = (num) => {
-  const col = (num % 3) + 1;
   const line = Math.floor(num / 3) + 1;
+  const col = (num % 3) + 1;
 
   return {x: line, y: col}
 }
