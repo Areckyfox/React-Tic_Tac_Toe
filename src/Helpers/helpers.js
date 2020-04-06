@@ -27,4 +27,7 @@ const coordinates = (num) => {
   return {x: line, y: col}
 }
 
-export {calculateWinner, coordinates};
+const createArray = (length) => Array.from(Array(length), (e, i) => i);
+
+
+export {calculateWinner, coordinates, createArray};

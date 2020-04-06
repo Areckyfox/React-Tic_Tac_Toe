@@ -1,41 +1,29 @@
 import React from 'react';
 import Square from '../Board/Square/Square';
+import {createArray} from '../../Helpers/helpers';
 
-const Board = (props) => {
+const Board = ({ toColor, squares, onClick }) => {
 
   const renderSquare = (i) => {
     let toColorSquare = "";
-    if (props.toColor && props.toColor.some((el) => el === i)) {
+    if (toColor && toColor.some((el) => el === i)) {
       toColorSquare = "toColor";
     }
     return (
       <Square
-        value={props.squares[i]}
-        onClick={() => props.onClick(i)}
+        key = {`square${i}`}
+        value={squares[i]}
+        onClick={() => onClick(i)}
         toColor={toColorSquare}
       />
     );
   };
   
- return (
-    <div>
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
-    </div>
-  );
+  return createArray(3).map(i => (
+      <div key={`row${i}`} className="board-row">
+          {createArray(3).map((j,index, arr) => renderSquare(j +(i * arr.length)))}
+      </div>    
+  ))
 };
 
 export default Board;
