@@ -4,9 +4,14 @@
   "private": true,
   "homepage": "https://areckyfox.github.io/React-Tic_Tac_Toe/",
   "dependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.13.0",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",

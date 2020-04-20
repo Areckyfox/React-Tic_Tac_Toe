@@ -2,11 +2,17 @@ import React from 'react';
 import Square from '../Board/Square/Square';
 import {createArray} from '../../Helpers/helpers';
 
-const Board = ({ toColor, squares, onClick }) => {
+interface BoardProps {
+  onClick: (num: number) => void;
+  squares: string | null[];
+  toColor: any;
+}
 
-  const renderSquare = (i) => {
+const Board: React.FC<BoardProps> = ({ toColor, squares, onClick }) => {
+
+  const renderSquare = (i:number) => {
     let toColorSquare = "";
-    if (toColor && toColor.some((el) => el === i)) {
+    if (toColor && toColor.some((el:number) => el === i)) {
       toColorSquare = "toColor";
     }
     return (

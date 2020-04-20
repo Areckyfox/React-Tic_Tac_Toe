@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { calculateWinner, coordinates } from "../../Helpers/helpers";
 import Board from '../../Components/Board/Board';
 
-const Game = () => {
+const Game:React.FC= () => {
   const [history, setHistory] = useState([{squareNumber: 0, table: Array(9).fill(null)}]);
   const [xIsNext, setxIsNext] = useState(true);
   const [stepNumber, setStepNumber] = useState(0);
   const [reverseList, setReverseList] = useState(false);
   
-  const handleClick = el => {
+  const handleClick = (el: number) => {
     const updateHistory = history.slice(0, stepNumber + 1)
     const current = updateHistory[updateHistory.length - 1].table;
     const arraySquares = current.slice();
@@ -23,11 +23,11 @@ const Game = () => {
     setxIsNext(!xIsNext);   
   };
   
-  const jumpTo = (step) => {
+  const jumpTo = (step: number) => {
     setStepNumber(step);
     setxIsNext((step % 2) === 0);
   }
-  const reverseListHandle = () => {
+  const reverseListHandler = () => {
     setReverseList(!reverseList)
   }
 
@@ -56,7 +56,7 @@ const Game = () => {
       </li>
     );
   });
-  const squeareToColor = calculateWinner(current) ? calculateWinner(current).winLine: null;
+  const squeareToColor = calculateWinner(current) ? calculateWinner(current)!.winLine: null;
 
   let status = winner
     ? "Winner " + winner.winner
@@ -74,7 +74,7 @@ const Game = () => {
       </div>
       <div className="game-info">
         <div>{status}</div>
-        <button onClick={() => reverseListHandle()}>Reverse list</button>
+        <button onClick={() => reverseListHandler()}>Reverse list</button>
         <ul className={classReverseList}>{moves}</ul>
       </div>
     </div>
