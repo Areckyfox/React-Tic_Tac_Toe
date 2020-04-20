@@ -1,16 +1,16 @@
 import React from 'react';
 
 interface SquareProps {
-  onClick: (el: number) => void;
+  onClicked: () => void;
   value: string | null;
   toColor: string | null;
 }
 
-const Square: React.FC<SquareProps> = ({ onClick, value, toColor }) => {
+const Square: React.FC<SquareProps> = ({ onClicked, value, toColor }) => {
 
     const classNameButton = "square " + toColor;
   return (
-    <button className={classNameButton} onClick={onClick}>
+    <button className={classNameButton} onClick={onClicked}>
       {value}
     </button>
   );

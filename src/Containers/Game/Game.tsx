@@ -68,7 +68,7 @@ const Game:React.FC= () => {
       <div className="game-board">
         <Board
           squares={current}
-          onClick={(i) => handleClick(i)}
+          onClicked={(i) => handleClick(i)}
           toColor={squeareToColor}
         />
       </div>

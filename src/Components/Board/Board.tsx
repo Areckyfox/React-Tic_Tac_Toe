@@ -3,12 +3,12 @@ import Square from '../Board/Square/Square';
 import {createArray} from '../../Helpers/helpers';
 
 interface BoardProps {
-  onClick: (num: number) => void;
+  onClicked: (num: number) => void;
   squares: string | null[];
   toColor: any;
 }
 
-const Board: React.FC<BoardProps> = ({ toColor, squares, onClick }) => {
+const Board: React.FC<BoardProps> = ({ toColor, squares, onClicked }) => {
 
   const renderSquare = (i:number) => {
     let toColorSquare = "";
@@ -19,7 +19,7 @@ const Board: React.FC<BoardProps> = ({ toColor, squares, onClick }) => {
       <Square
         key = {`square${i}`}
         value={squares[i]}
-        onClick={() => onClick(i)}
+        onClick={() => onClicked(i)}
         toColor={toColorSquare}
       />
     );
