@@ -1,4 +1,4 @@
-const calculateWinner = (squares: any[]) => {
+const calculateWinner = (squares: number[]) => {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -27,7 +27,7 @@ const coordinates = (num: number) => {
   return {x: line, y: col}
 }
 
-const createArray = (length:number) => Array.from(Array(length), (e, i) => i);
+const createArray = (length:number) => Array.from(Array(length), (_, i) => i);
 
 
 export {calculateWinner, coordinates, createArray};

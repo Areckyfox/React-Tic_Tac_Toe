@@ -28,7 +28,7 @@ const Board: React.FC<BoardProps> = ({ toColor, squares, onClicked }) => {
     <>
      {createArray(3).map((i) => (
       <div key={`row${i}`} className='board-row'>
-        {createArray(3).map((j, index, arr) => renderSquare(j + i * arr.length))}
+        {createArray(3).map((j, _, arr) => renderSquare(j + i * arr.length))}
       </div>
     ))}
     </>
