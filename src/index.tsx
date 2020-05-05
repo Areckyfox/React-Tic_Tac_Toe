@@ -1,6 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Game from './Containers/Game/Game';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import './index.css'
+import Game from './Containers/Game/Game'
 
-ReactDOM.render(<Game />, document.getElementById("root"));
+const store = createStore()
+
+ReactDOM.render(<Game />, document.getElementById('root'))
