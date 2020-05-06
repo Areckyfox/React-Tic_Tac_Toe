@@ -8,8 +8,10 @@
     "@types/node": "^13.13.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-redux": "^7.1.8",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-redux": "^7.2.0",
     "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "tslint": "^6.1.2",
@@ -41,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "typesafe-actions": "^5.1.0"
   }
 }

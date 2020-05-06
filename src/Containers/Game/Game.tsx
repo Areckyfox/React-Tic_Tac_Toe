@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
+// import { connect } from 'react-redux'
 import Board from '../../Components/Board/Board'
 import Moves from '../Moves/Moves'
 import { calculateWinner } from '../../Helpers/helpers'
@@ -53,9 +55,11 @@ const Game: React.FC = () => {
   const reverseListHandler = () => {
     setReverseList(!reverseList)
   }
+  const numberSquare = useSelector((state: IHistory[]) => state[0].squareNumber)
 
   return (
     <div className='game'>
+      <div>{JSON.stringify(numberSquare)}</div>
       <Board
         squares={current}
         onClicked={handleClick}
@@ -72,4 +76,9 @@ const Game: React.FC = () => {
   )
 }
 
+// const mapSTateToProps = (state: any[]) => {
+//   return { iHistory: state[0].squareNumber }
+// }
+
 export default Game
+// export default connect(mapSTateToProps)(Game)
